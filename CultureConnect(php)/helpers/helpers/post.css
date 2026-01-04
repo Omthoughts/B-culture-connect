@@ -1,0 +1,324 @@
+/* ===========================================
+   CULTURECONNECT - SINGLE POST VIEW (post.css)
+   A Portal to Memory: Depth, Glass-Morphism, and Centered Sacred Text
+   ============================================ */
+
+/* === ROOT VARIABLES (Inherited/Extended from create-post.css) === */
+:root {
+    /* Base Colors (from create-post.css) */
+    --primary: #2D89EF;
+    --accent: #FF6F61;
+    --purity: #F9FAFB;
+    --white: #FFFFFF;
+    --text-primary: #1A1A2E;
+    --text-secondary: #4A5568;
+    
+    /* Post-Specific Variables */
+    --content-max-width: 700px;
+    --playfair: 'Playfair Display', serif; 
+
+    /* Glass-Morphism Variables */
+    --glass-morphism: rgba(255, 255, 255, 0.1);
+    --glass-morphism-dark: rgba(0, 0, 0, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    
+    /* Aura Colors (Breathing Gradients) */
+    --aura-pink: rgba(252, 228, 236, 0.6); /* Soft pink */
+    --aura-blue: rgba(227, 242, 253, 0.6); /* Clarity blue */
+    /* Fallbacks for variables referenced elsewhere */
+    --blue-clarity: rgba(227, 242, 253, 0.6);
+    --pink-soft: rgba(252, 228, 236, 0.6);
+}
+
+/* === BASE STYLES === */
+body {
+    background-color: var(--purity);
+    color: var(--text-primary);
+    min-height: 250vh; /* Ensures scroll depth for parallax/sticky bar */
+    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll from parallax/shadows */
+}
+
+/* === HERO IMAGE & PARALLAX === */
+.hero-image-container {
+    height: 90vh; /* Fills screen vertically for the 'portal' feel */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed; /* Simple Parallax key (CSS layer) */
+    position: relative;
+    
+    /* Second Parallax layer is handled by JS translate3d for performance */
+    transform: translateZ(0); 
+    will-change: transform;
+}
+
+.hero-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient shifts from transparency to the background color to smooth content transition */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 60%, var(--purity) 100%);
+}
+
+/* === AUTHOR CARD (GLASS BUBBLE) === */
+.author-card-portal {
+    position: absolute;
+    right: 5vw;
+    top: calc(90vh - 80px); /* Positions it to float over the content edge */
+    display: flex;
+    align-items: center;
+    padding: 10px 20px 10px 10px;
+    border-radius: 50px;
+    z-index: 10;
+    text-decoration: none;
+    cursor: pointer;
+    
+    /* GLASS-MORPHISM STYLES */
+    background: var(--glass-morphism);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    
+    /* Transition for subtle hover animation */
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+    will-change: transform; /* For the JS-driven parallax */
+}
+
+.author-card-portal:hover {
+    transform: scale(1.05) translateZ(5px); /* Pops out slightly */
+    /* Add a subtle aura glow */
+    box-shadow: var(--glass-shadow), 0 0 15px var(--aura-blue); 
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 12px;
+    border: 3px solid var(--glass-border);
+    object-fit: cover;
+}
+
+.author-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    text-shadow: 0 0 2px var(--white); /* Helps name pop over the blurred background */
+}
+
+/* === CONTENT (SACRED TEXT) === */
+.post-content-container {
+    position: relative;
+    padding-top: 50px; /* Space for the author card overlap */
+}
+
+.post-article {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.post-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 40px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.post-category-tag {
+    text-align: center;
+    color: var(--primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.post-body p {
+    line-height: 1.8;
+    margin-bottom: 1.5em;
+    font-size: 1.15rem;
+    /* Center the prose slightly more aesthetically */
+    text-align: justify;
+    hyphens: auto;
+}
+
+.post-body q {
+    font-family: var(--playfair);
+    font-style: italic;
+    display: block;
+    margin: 40px auto;
+    max-width: 80%;
+    font-size: 1.6rem;
+    text-align: center;
+    color: var(--text-secondary);
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+}
+
+/* === TAG GARDEN BEACONS === */
+.post-tags-garden {
+    max-width: var(--content-max-width);
+    margin: 40px auto;
+    padding-top: 20px;
+    border-top: 1px dashed var(--blue-clarity);
+    text-align: center;
+}
+
+.tag-beacon {
+    display: inline-block;
+    padding: 6px 15px;
+    margin: 5px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    /* Gradient light bloom effect */
+    background: linear-gradient(45deg, var(--pink-soft), var(--blue-clarity));
+    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+/* === COMMENTS SECTION (GLASS SHRINES) === */
+.comments-section {
+    max-width: var(--content-max-width);
+    margin: 80px auto 120px; /* Extra bottom margin for sticky bar */
+    padding: 0 20px;
+}
+
+.glass-shrine {
+    background: var(--glass-morphism-dark); /* Slightly darker glass for contrast */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+/* Breathing Aura for input */
+.comment-input-shrine:focus-within {
+    box-shadow: 
+        0 0 15px var(--aura-pink), /* Pink-blue breath on focus */
+        0 0 25px var(--aura-blue);
+    transform: translateY(-2px);
+}
+
+.comment-shrine:hover {
+     /* Ethereal blue aura on hover */
+    box-shadow: var(--glass-shadow), 0 0 8px rgba(45, 137, 239, 0.4); 
+    transform: translateY(-2px);
+}
+
+/* === STICKY INTERACTION BAR === */
+.sticky-interaction-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 15px 20px;
+    
+    /* Glass effect for the sticky bar */
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    padding: 10px 18px;
+    margin: 0 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.action-btn:hover {
+    background-color: var(--aura-blue); /* Subtle hover feedback */
+    transform: translateY(-1px);
+}
+
+/* === SHARE MODAL (Glass Chamber) === */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content.glass-shrine {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    min-width: 350px;
+    padding: 30px;
+    text-align: center;
+    
+    /* Using the glass shrine style for the chamber */
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+}
+
+/* Fade-In animation for the modal */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+.modal.share-modal.fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+
+/* === MEDIA QUERIES (Responsiveness) === */
+@media (max-width: 768px) {
+    .hero-image-container {
+        height: 50vh; 
+        background-attachment: scroll; /* Disable fixed parallax on mobile */
+    }
+    
+    .author-card-portal {
+        /* Move the card closer to the center/top on small screens */
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        top: calc(50vh - 30px);
+    }
+
+    .sticky-interaction-bar {
+        padding: 10px 5px;
+    }
+    
+    .action-btn {
+        padding: 8px 10px;
+        margin: 0 4px;
+        font-size: 0.9rem;
+    }
+    
+    .action-btn span:not(.icon) {
+        display: none; /* Hide text on mobile, only show icons */
+    }
+}
